@@ -3,7 +3,7 @@ local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "GrowLoadingScreen"
 screenGui.ResetOnSpawn = false
 screenGui.IgnoreGuiInset = true
-screenGui.Parent = game:GetService("CoreGui") -- Using CoreGui so it stays persistent
+screenGui.Parent = game:GetService("CoreGui")
 
 local background = Instance.new("Frame")
 background.Size = UDim2.new(1, 0, 1, 0)
@@ -32,16 +32,21 @@ task.spawn(function()
 	end
 end)
 
--- Load external script
-local success, result = pcall(function()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/DoDoHub-12/scripts/refs/heads/main/GrowAGardenScript.lua"))()
+-- Load main script in the background
+task.spawn(function()
+	local success, result = pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/DoDoHub-12/scripts/refs/heads/main/GrowAGardenScript.lua"))()
+	end)
+
+	-- Optional warning if it fails
+	if not success then
+		warn("Failed to load Grow A Tree script:", result)
+	end
+
+	-- Wait a bit so the script feels like it "loaded"
+	task.wait(2) -- Adjust this delay if needed
+
+	-- Remove loading screen
+	run = false
+	screenGui:Destroy()
 end)
-
--- Remove loading screen
-run = false
-screenGui:Destroy()
-
--- Optional: Notify if it failed
-if not success then
-	warn("Failed to load Grow A Tree script:", result)
-end
