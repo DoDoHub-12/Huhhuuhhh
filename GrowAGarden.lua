@@ -18,7 +18,7 @@ textLabel.BackgroundTransparency = 1
 textLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
 textLabel.Font = Enum.Font.Code
 textLabel.TextScaled = true
-textLabel.Text = "Loading Grow A Tree Script..."
+textLabel.Text = "Loading Grow A Garden Script..."
 textLabel.Parent = background
 
 -- Animate dots
